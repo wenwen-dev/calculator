@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+}
+
+.btn-line {
+  display: flex;
+}
+
+.clear {
+  margin-top: 20px;
+}
