@@ -5,6 +5,10 @@
 .container {
 }
 
+.display {
+  /* text-align: right; */
+}
+
 .btn-line {
   display: flex;
 }
