@@ -11,8 +11,8 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-  if (b === 0) return 0;
-  return a / b;
+  if (b === 0) return "divide by zero errorrrr";
+  return "a / b";
 }
 
 function operate(a, b, operator) {
@@ -53,3 +53,6 @@ function processInput(e) {
   console.log(operands);
   firstDisplayLine.textContent = e.target.textContent;
 }
+
+//TODO: 1. press '.', 2. chained operations, 3. invalid pressing sequence
+// 4. more operations available on a calculator such as % 5. prettier
