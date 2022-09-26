@@ -31,27 +31,38 @@ const secondDisplayLine = document.querySelector('#display2');
 let operands = [undefined,undefined, undefined];
 
 function processInput(e) {
-  const input = e.target.textContent;
+  let input = e.target.textContent;
  
   if (input.match(/[0-9]/)) {
-    if (operands[0] === undefined)
+    if (!operands[2] && (operands[0]))
+      operands[0] = Number(operands[0] + input);
+    if (operands[2] && (operands[0]) && operands[1])
+      operands[1] = Number(operands[1] + input);
+    if (!operands[0])
       operands[0] = Number(input);
-    else
+    if (operands[0] && operands[2] && !operands[1])
       operands[1] = Number(input);
   }
 
-  if (input.match(/[-+--*/]/)) {
-    operands[2] = input;
+  if (input.match(/[\+\-\*-/]/)) {
+    if (operands[2]) {
+      operands[0] = operate(Number(operands[0]), Number(operands[1]), operands[2]);
+      firstDisplayLine.textContent = operands[0];
+      secondDisplayLine.textContent = '';
+      operands[1] = undefined;
+    }
+    else
+      operands[2] = input;
   }
-
+console.log('input: ' + input + typeof input);
   if (input === '=') {
     const result = operate(Number(operands[0]), Number(operands[1]), operands[2]);
     secondDisplayLine.textContent = result;
-    operands = [undefined, undefined, undefined];
+    operands = [result, undefined, undefined];
   }
 
   console.log(operands);
-  firstDisplayLine.textContent = e.target.textContent;
+  firstDisplayLine.textContent += ' ' + e.target.textContent;
 }
 
 //TODO: 1. press '.', 2. chained operations, 3. invalid pressing sequence
