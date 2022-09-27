@@ -11,17 +11,16 @@
 .container-display {
   width: 100px;
   height: 100px;
-
+  text-align: right;
 }
+
 .display {
-  /* text-align: right; */
+  border-bottom: 1px lightgray solid;
 }
 
-
-
-.buttons {
+.container {
   border: solid 1px gold;
-  margin: 10px;
+  margin: 0 10px;
   padding: 20px;
   border-radius: 20px;
 }
@@ -32,7 +31,7 @@
 
 .btn {
   border: 1px  lightgray;
-  width: 50px;
+  width: 100px;
   height: 50px;
 }
 
@@ -41,5 +40,10 @@
   padding: 5px 8px;
   border: none;
   border-radius: 3px;
+  background-color: gold;
+}
+
+#equal-sign {
+  flex: auto;
   background-color: gold;
 }
