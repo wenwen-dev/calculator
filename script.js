@@ -78,7 +78,7 @@ function processInput(e) {
   
 
   if (operands[2] && operands[0] == undefined && operands[1] == undefined) {
-  secondDisplayLine.textContent = 'Please select a number to get started'
+  secondDisplayLine.textContent = 'Please clear and select a number to get started'
 }
 
   if (input === '=') {
@@ -92,5 +92,5 @@ function processInput(e) {
 
 //TODO: allow decimal number input (e.g. 3.5)
 // TODO: allow operations available on a calculator such as % 
-//TODO: prettier
+//TODO: prettier: change color when hover
 //TODO: use RegEx for condition operator sign
