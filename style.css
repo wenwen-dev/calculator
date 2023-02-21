@@ -1,49 +1,90 @@
-* {
+html {
   box-sizing: border-box;
 }
+*, *:before, *:after {
+  box-sizing: inherit;
+}
 
-.container {
+body {
   display: flex;
   flex-direction: column;
+  gap: 3rem;
   align-items: center;
+  background-color: rgb(43, 38, 38);
+  color: white;
 }
 
-.container-display {
-  width: 100px;
-  height: 100px;
-  text-align: right;
-}
-
-.display {
-  border-bottom: 1px lightgray solid;
+h1 {
+  text-align: center;
 }
 
 .container {
+  width: 400px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
   border: solid 1px gold;
   margin: 0 10px;
   padding: 20px;
   border-radius: 20px;
+  gap: 2rem;
+}
+
+.container-display {
+  height: 30%;
+  text-align: right;
+  padding-top: 120px;
+  border-bottom: 1px solid gold;
+}
+
+.buttons {
+  height: 70%;
+  display: flex;
+  flex-direction: column;
 }
 
 .btn-line {
+  flex: 1 0 auto;
+  /* border: 1px green solid; */
   display: flex;
+  gap: 1rem;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .btn {
-  border: 1px  lightgray;
-  width: 100px;
-  height: 50px;
+  /* border: 1px solid hotpink; */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background-color: #615c5c;
+  color: white;
+  font-size: large;
+  font-weight: 500;
 }
 
+/* 
 .clear {
   margin-top: 20px;
   padding: 5px 8px;
   border: none;
   border-radius: 3px;
   background-color: gold;
+} */
+
+button.operator {
+  background-color: orange;
 }
 
-#equal-sign {
-  flex: auto;
-  background-color: gold;
+/* #equal-sign {
+  flex: 1;
+  width: auto;
+} */
+
+#clear-btn {
 }
+
+
+/* TODO: how to set border-radius so it's a circle when I don't know the width and height of the button? */
+/* TODO: if only 3 buttons on a line, I know to use flex:2 to grow it, but how do I make the buttons aligned with other lines? */
+
