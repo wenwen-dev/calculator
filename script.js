@@ -22,14 +22,57 @@ function operate(a, b, operator) {
   if (operator === '/') return divide(a, b);
 }
 
-const firstDisplayLine = document.querySelector('#display1');
-const secondDisplayLine = document.querySelector('#display2');
-
+const display = document.querySelector('.display');
 const buttons = document.querySelectorAll('.btn');
-buttons.forEach(button => button.addEventListener('click', processInput));
+const numButtons = document.querySelectorAll('.num');
+const operators = document.querySelectorAll('.operator');
+const equalOperator = document.querySelector('#equal-operator');
+
+let num1;
+let num2;
+let operator;
+let waitingFor2ndNum;
+
+// buttons.forEach(button => button.addEventListener('click', processInput));
+numButtons.forEach(button => {
+  button.addEventListener('click', displayNum);
+  button.addEventListener('click', storeNum);
+})
+operators.forEach(operator => {
+  operator.addEventListener('click', getOperator);
+})
+equalOperator.addEventListener('click', operateAndDisplay);
+
+function operateAndDisplay() {
+  const result = operate(num1, num2, operator);
+  display.textContent = result;
+}
+
+
+function getOperator(event) {
+  operator = event.target.textContent;
+  console.log(operator, typeof operator);
+}
+
+function displayNum(event) {
+  const num = event.target.textContent;
+  display.textContent = num;
+}
+
+function storeNum(event) {
+  if(waitingFor2ndNum) {
+    num2 = Number(event.target.textContent);
+    waitingFor2ndNum = false;
+  }
+  else {
+    num1 = Number(event.target.textContent);
+    waitingFor2ndNum = true;
+  }
+  console.log(num1, typeof num1, num2, typeof num2, waitingFor2ndNum);
+}
 
 const clearButton = document.querySelector('.clear');
-clearButton.addEventListener('click', clear);
+// clearButton.addEventListener('click', clear);
 
 let operands = [undefined, undefined, undefined, false, -1];
 
@@ -90,7 +133,7 @@ function processInput(e) {
   firstDisplayLine.textContent += ' ' + e.target.textContent;
 }
 
-//TODO: allow decimal number input (e.g. 3.5)
+//TODO: 1. allow decimal number input (e.g. 3.5)
 // TODO: allow operations available on a calculator such as % 
 //TODO: prettier: change color when hover
 //TODO: use RegEx for condition operator sign

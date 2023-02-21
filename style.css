@@ -30,11 +30,12 @@ h1 {
   gap: 2rem;
 }
 
-.container-display {
+.display {
   height: 30%;
   text-align: right;
   padding-top: 120px;
   border-bottom: 1px solid gold;
+  font-size: 50px;
 }
 
 .buttons {
@@ -85,6 +86,7 @@ button.operator {
 }
 
 
-/* TODO: how to set border-radius so it's a circle when I don't know the width and height of the button? */
-/* TODO: if only 3 buttons on a line, I know to use flex:2 to grow it, but how do I make the buttons aligned with other lines? */
+/* TODO: 1. how to set border-radius so it's a circle when I don't know the width and height of the button? */
+/* TODO: 2. if only 3 buttons on a line, I know to use flex:2 to grow it, but how do I make the buttons aligned with other lines? */
+/* TODO: 3. radius circle looks weird - about half done wth border */
 
