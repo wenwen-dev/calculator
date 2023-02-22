@@ -27,16 +27,16 @@ const numButtons = document.querySelectorAll('.num');
 const operators = document.querySelectorAll('.operator');
 const equalOperator = document.querySelector('#equal-operator');
 const clearBtn = document.querySelector("#clear-btn");
+const decimalBtn = document.querySelector('#decimal');
 
 let num1;
 let num2;
 let operator;
 let result;
 let waitingFor2ndNum;
+let isDecimal = false;
 
 clearBtn.addEventListener('click', clear);
-
-// buttons.forEach(button => button.addEventListener('click', processInput));
 numButtons.forEach(button => {
   button.addEventListener('click', displayNum);
   button.addEventListener('click', storeNum);
@@ -46,7 +46,13 @@ operators.forEach(operator => {
 })
 equalOperator.addEventListener('click', operateAndDisplay);
 
+function getDecimal() {
+  if (num1 && !num2) {
+    num1 = ''+num1+'.';
+    isDecimal = true;
+  }
 
+}
 
 function clear() {
   num1 = undefined;
@@ -55,11 +61,12 @@ function clear() {
   result = undefined;
   waitingFor2ndNum = undefined;
   display.textContent = "";
+  isDecimal = false;
+  decimalBtn.disabled = false;
 }
 
 function operateAndDisplay(event) {
-  console.log(num2, typeof num2);
-  console.log(display.textContent);
+  console.log(`summary: ${num1}, ${num2}, ${operator}`);
   if (num2 === 0) {
     display.textContent = "Divide by 0? Seriously?";
   }
@@ -67,18 +74,22 @@ function operateAndDisplay(event) {
     result = operate(num1, num2, operator);
     console.log(result);  
     if ((result+"").length > 10) result = Number(result).toFixed(9);
-    // clear();
-    display.textContent = result;
-
+    num1 = result;
+    num2 = undefined;
+    operator = undefined;
+    waitingFor2ndNum = undefined;
+    isDecimal = false;
+    decimalBtn.disabled = false;
+    display.textContent = num1;
   }
   else {
     display.textContent = "Error";
     clear();
   } 
-  
 }
 
 function getOperator(event) {
+  decimalBtn.disabled = false;
   console.log(`operator: ${event.target.textContent}`);
 
   if (num1 && num2) {
@@ -105,87 +116,53 @@ function displayNum(event) {
   const num = event.target.textContent;
   display.textContent = num;
 }
+
 function updateNum(num) {
   display.textContent = num;
 }
 
 function storeNum(event) {
-  if (!operator && num1) {
+  if (event.target.textContent == '.') {
+    isDecimal = true;
+    num2 ? 
+        num2 = '' + num2 + event.target.textContent : 
+        num1 = '' + num1 + event.target.textContent;
+    display.textContent = num2 ? num2 : num1;
+  }
+  
+  else if (isDecimal && !num2) {
+    decimalBtn.disabled = false;
+    num1 = Number('' + num1 + event.target.textContent);
+    display.textContent = num1;
+    decimalBtn.disabled = true;
+    isDecimal = false;
+  }
+
+  else if (isDecimal && num1 && num2) {
+    decimalBtn.disabled = false;
+    num2 = Number('' + num2 + event.target.textContent);
+    display.textContent = num2;
+    decimalBtn.disabled = true;
+    isDecimal = false;
+  }
+
+  else if (!isDecimal && !operator && num1) {
     num1 = Number(""+num1+event.target.textContent);
     updateNum(num1);
   }
-  else if (!operator && !num1) {
+  else if (!isDecimal && !operator && !num1) {
     num1 = Number(event.target.textContent);
   }
-  else if (waitingFor2ndNum) {
+  else if (!isDecimal && waitingFor2ndNum) {
     num2 = Number(event.target.textContent);
     waitingFor2ndNum = false;
   }
+  else if (num1 && num2 && operator) {
+    num2 = Number(''+ num2 + event.target.textContent);
+    display.textContent = num2;
+  }
 
   console.log(num1, typeof num1, num2, typeof num2, operator,waitingFor2ndNum);
-}
-
-//Below: old code
-const clearButton = document.querySelector('.clear');
-// clearButton.addEventListener('click', clear);
-
-let operands = [undefined, undefined, undefined, false, -1];
-
-// function clear(e) {
-//   operands = [undefined, undefined, undefined, false];
-//   firstDisplayLine.textContent = '';
-//   secondDisplayLine.textContent = '';
-// }
-
-function processInput(e) {
-  let input = e.target.textContent;
-
-  if (operands[3] === false && input.match(/[0-9]/)) {
-    if (operands[2] === undefined && (operands[0]))
-      operands[0] = Number(operands[0] + input);
-    if (operands[2] && (operands[0]) && operands[1])
-      operands[1] = Number(operands[1] + input);
-    if (operands[0] === undefined)
-      operands[0] = Number(input);
-    if (operands[0] && operands[2] && !operands[1])
-      operands[1] = Number(input);
-  }
-
-  if (input == '.') {
-    operands[3] = true;
-  }
-
-  if (input === '+' || input === '-' || input === '*' || input === '/') {
-    if (operands[3] === true && !operands[1]) {
-      console.log(operands[4]);
-      console.log(operands[0]);
-      operands[0] = Number(operands[0]) * Math.pow(10, -1 * operands[4]);
-      operands[3] = false;
-    }
-
-  if (operands[2]) {
-    operands[0] = operate(Number(operands[0]), Number(operands[1]), operands[2]);
-    firstDisplayLine.textContent = operands[0];
-    secondDisplayLine.textContent = '';
-    operands[1] = undefined;
-    operands[2] = input;
-  }
-    else
-      operands[2] = input;
-  }
-  
-
-  if (operands[2] && operands[0] == undefined && operands[1] == undefined) {
-  secondDisplayLine.textContent = 'Please clear and select a number to get started'
-}
-
-  if (input === '=') {
-    const result = operate(Number(operands[0]), Number(operands[1]), operands[2]);
-    secondDisplayLine.textContent = result;
-    operands = [result, undefined, undefined];
-  }
-
-  firstDisplayLine.textContent += ' ' + e.target.textContent;
 }
 
 //TODO: 1. allow decimal number input (e.g. 3.5)
