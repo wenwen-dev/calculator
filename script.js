@@ -18,8 +18,8 @@ function divide(a, b) {
 function operate(a, b, operator) {
   if (operator === '+') return add(a, b);
   if (operator === '-') return subtract(a, b);
-  if (operator === '*') return multiply(a, b);
-  if (operator === '/') return divide(a, b);
+  if (operator === 'x') return multiply(a, b);
+  if (operator === '÷') return divide(a, b);
 }
 
 const display = document.querySelector('.display');
@@ -31,6 +31,7 @@ const equalOperator = document.querySelector('#equal-operator');
 let num1;
 let num2;
 let operator;
+let result;
 let waitingFor2ndNum;
 
 // buttons.forEach(button => button.addEventListener('click', processInput));
@@ -43,15 +44,39 @@ operators.forEach(operator => {
 })
 equalOperator.addEventListener('click', operateAndDisplay);
 
-function operateAndDisplay() {
-  const result = operate(num1, num2, operator);
-  display.textContent = result;
+function clear() {
+  num1 = undefined;
+  num2 = undefined;
+  operator = undefined;
+  waitingFor2ndNum = false;
 }
 
+function operateAndDisplay() {
+  result = operate(num1, num2, operator);
+  console.log(result);
+  display.textContent = result;
+  clear();
+}
 
 function getOperator(event) {
-  operator = event.target.textContent;
-  console.log(operator, typeof operator);
+  console.log(`operator: ${event.target.textContent}`);
+
+  if (num1 && num2) {
+    console.log("continuing operation", num1, num2);
+    operateAndDisplay();
+    console.log("continuing operation, cleared", num1, num2);
+
+    num1 = result;
+    operator = event.target.textContent;
+    waitingFor2ndNum = true;
+    console.log("continuing operation, cleared and reassigned num1", num1, num2);
+  }
+  else {
+    console.log("only num1 has value");
+    operator = event.target.textContent;
+  }
+  console.log(`summary: ${num1}, ${num2}, ${operator}`);
+
 }
 
 function displayNum(event) {
@@ -68,19 +93,20 @@ function storeNum(event) {
     num1 = Number(event.target.textContent);
     waitingFor2ndNum = true;
   }
-  console.log(num1, typeof num1, num2, typeof num2, waitingFor2ndNum);
+  console.log(num1, typeof num1, num2, typeof num2, operator,waitingFor2ndNum);
 }
 
+//Below: old code
 const clearButton = document.querySelector('.clear');
 // clearButton.addEventListener('click', clear);
 
 let operands = [undefined, undefined, undefined, false, -1];
 
-function clear(e) {
-  operands = [undefined, undefined, undefined, false];
-  firstDisplayLine.textContent = '';
-  secondDisplayLine.textContent = '';
-}
+// function clear(e) {
+//   operands = [undefined, undefined, undefined, false];
+//   firstDisplayLine.textContent = '';
+//   secondDisplayLine.textContent = '';
+// }
 
 function processInput(e) {
   let input = e.target.textContent;
