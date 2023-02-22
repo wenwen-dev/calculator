@@ -11,9 +11,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-  if (b == 0) return "Oops, divide by 0 error!";
-  console.log(b);
-  return a / b;
+  if (b != 0) return a / b;
 }
 
 function operate(a, b, operator) {
@@ -54,7 +52,8 @@ function clear() {
   num1 = undefined;
   num2 = undefined;
   operator = undefined;
-  waitingFor2ndNum = false;
+  result = undefined;
+  waitingFor2ndNum = undefined;
   display.textContent = "";
 }
 
@@ -68,7 +67,7 @@ function operateAndDisplay(event) {
     result = operate(num1, num2, operator);
     console.log(result);  
     if ((result+"").length > 10) result = Number(result).toFixed(9);
-    clear();
+    // clear();
     display.textContent = result;
 
   }
