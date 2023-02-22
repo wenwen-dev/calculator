@@ -11,7 +11,8 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-  if (b === 0) return "Oops, divide by 0 error!";
+  if (b == 0) return "Oops, divide by 0 error!";
+  console.log(b);
   return a / b;
 }
 
@@ -22,17 +23,20 @@ function operate(a, b, operator) {
   if (operator === '÷') return divide(a, b);
 }
 
-const display = document.querySelector('.display');
+let display = document.querySelector('.display');
 const buttons = document.querySelectorAll('.btn');
 const numButtons = document.querySelectorAll('.num');
 const operators = document.querySelectorAll('.operator');
 const equalOperator = document.querySelector('#equal-operator');
+const clearBtn = document.querySelector("#clear-btn");
 
 let num1;
 let num2;
 let operator;
 let result;
 let waitingFor2ndNum;
+
+clearBtn.addEventListener('click', clear);
 
 // buttons.forEach(button => button.addEventListener('click', processInput));
 numButtons.forEach(button => {
@@ -44,24 +48,42 @@ operators.forEach(operator => {
 })
 equalOperator.addEventListener('click', operateAndDisplay);
 
+
+
 function clear() {
   num1 = undefined;
   num2 = undefined;
   operator = undefined;
   waitingFor2ndNum = false;
+  display.textContent = "";
 }
 
-function operateAndDisplay() {
-  result = operate(num1, num2, operator);
-  console.log(result);
-  display.textContent = result;
-  clear();
+function operateAndDisplay(event) {
+  console.log(num2, typeof num2);
+  console.log(display.textContent);
+  if (num2 === 0) {
+    display.textContent = "Divide by 0? Seriously?";
+  }
+  else if (num1 && num2 && operator) {
+    result = operate(num1, num2, operator);
+    console.log(result);  
+    if ((result+"").length > 10) result = Number(result).toFixed(9);
+    clear();
+    display.textContent = result;
+
+  }
+  else {
+    display.textContent = "Error";
+    clear();
+  } 
+  
 }
 
 function getOperator(event) {
   console.log(`operator: ${event.target.textContent}`);
 
   if (num1 && num2) {
+    waitingFor2ndNum = false;
     console.log("continuing operation", num1, num2);
     operateAndDisplay();
     console.log("continuing operation, cleared", num1, num2);
@@ -72,6 +94,7 @@ function getOperator(event) {
     console.log("continuing operation, cleared and reassigned num1", num1, num2);
   }
   else {
+    waitingFor2ndNum = true;
     console.log("only num1 has value");
     operator = event.target.textContent;
   }
@@ -83,16 +106,23 @@ function displayNum(event) {
   const num = event.target.textContent;
   display.textContent = num;
 }
+function updateNum(num) {
+  display.textContent = num;
+}
 
 function storeNum(event) {
-  if(waitingFor2ndNum) {
+  if (!operator && num1) {
+    num1 = Number(""+num1+event.target.textContent);
+    updateNum(num1);
+  }
+  else if (!operator && !num1) {
+    num1 = Number(event.target.textContent);
+  }
+  else if (waitingFor2ndNum) {
     num2 = Number(event.target.textContent);
     waitingFor2ndNum = false;
   }
-  else {
-    num1 = Number(event.target.textContent);
-    waitingFor2ndNum = true;
-  }
+
   console.log(num1, typeof num1, num2, typeof num2, operator,waitingFor2ndNum);
 }
 
