@@ -6,16 +6,28 @@ html {
 }
 
 body {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  background-color: #8785A2;
+  color: #F6F6F6;
   align-items: center;
-  background-color: rgb(43, 38, 38);
-  color: white;
 }
 
-h1 {
-  text-align: center;
+header {
+
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+}
+
+
+strong {
+  color: #FFC7C7;
 }
 
 .container {
@@ -63,15 +75,6 @@ h1 {
   font-size: large;
   font-weight: 500;
 }
-
-/* 
-.clear {
-  margin-top: 20px;
-  padding: 5px 8px;
-  border: none;
-  border-radius: 3px;
-  background-color: gold;
-} */
 
 button.operator,
 #clear-btn {
