@@ -36,9 +36,8 @@ let result;
 let waitingFor2ndNum;
 let isDecimal = false;
 
-//FIXME: Next time start from Extra credits "make it look nice"
-//TODO: make the page basic layout using flex, header, and footer pushed to bottom
-//make the operator button change color until another button is pressed
+
+//TODO: make the operator button change color until another button is pressed
 //FIXME: at last, go through my codes, esp. storeNum() and improve the logic, can compare with other solutions to learn
 
 clearBtn.addEventListener('click', clear);
