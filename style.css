@@ -54,6 +54,11 @@ strong {
   flex-direction: column;
 }
 
+button {
+  border: 0;
+  /* !!! */
+}
+
 .btn-line {
   flex: 1 0 auto;
   display: flex;
