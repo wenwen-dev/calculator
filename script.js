@@ -1,3 +1,30 @@
+let display = document.querySelector('.display');
+const buttons = document.querySelectorAll('.btn');
+const numButtons = document.querySelectorAll('.num');
+const operators = document.querySelectorAll('.operator');
+const equalOperator = document.querySelector('#equal-operator');
+const clearBtn = document.querySelector("#clear-btn");
+const decimalBtn = document.querySelector('#decimal');
+
+let num1;
+let num2;
+let operator;
+let result;
+let waitingFor2ndNum;
+let isDecimal = false;
+
+clearBtn.addEventListener('click', clear);
+numButtons.forEach(button => {
+  button.addEventListener('click', displayNum);
+  button.addEventListener('click', storeNum);
+})
+operators.forEach(operator => {
+  operator.addEventListener('click', getOperator);
+})
+equalOperator.addEventListener('click', operateAndDisplay);
+
+
+
 function add(a, b) {
   return a + b;
 }
@@ -21,34 +48,12 @@ function operate(a, b, operator) {
   if (operator === '÷') return divide(a, b);
 }
 
-let display = document.querySelector('.display');
-const buttons = document.querySelectorAll('.btn');
-const numButtons = document.querySelectorAll('.num');
-const operators = document.querySelectorAll('.operator');
-const equalOperator = document.querySelector('#equal-operator');
-const clearBtn = document.querySelector("#clear-btn");
-const decimalBtn = document.querySelector('#decimal');
 
-let num1;
-let num2;
-let operator;
-let result;
-let waitingFor2ndNum;
-let isDecimal = false;
 
 
 //FIXME: at last, go through my codes, esp. storeNum() and improve the logic, can compare with other solutions to learn
 
-clearBtn.addEventListener('click', clear);
-numButtons.forEach(button => {
-  button.addEventListener('click', displayNum);
-  button.addEventListener('click', storeNum);
-})
-operators.forEach(operator => {
-  operator.addEventListener('click', getOperator);
-  // operator.addEventListener('click', changeBgColor);
-})
-equalOperator.addEventListener('click', operateAndDisplay);
+
 
 function getDecimal() {
   if (num1 && !num2) {
@@ -176,7 +181,4 @@ function storeNum(event) {
   console.log(num1, typeof num1, num2, typeof num2, operator,waitingFor2ndNum);
 }
 
-//TODO: 1. allow decimal number input (e.g. 3.5)
-// TODO: allow operations available on a calculator such as % 
-//TODO: prettier: change color when hover
 //TODO: use RegEx for condition operator sign
