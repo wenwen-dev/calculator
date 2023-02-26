@@ -67,6 +67,10 @@ button {
   align-items: center;
 }
 
+.first-btn-line {
+  justify-content: space-around;
+}
+
 .btn {
   border-radius: 50%;
   width: 70px;
@@ -79,11 +83,13 @@ button {
 
 button.operator,
 #clear-btn,
+#delete-btn,
 #equal-operator {
   background-color: #635985;
 }
 
-#clear-btn {
+#clear-btn,
+#delete-btn {
   font-size: 16px;
   font-weight: 400;
 }

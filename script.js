@@ -5,6 +5,7 @@ const operators = document.querySelectorAll('.operator');
 const equalOperator = document.querySelector('#equal-operator');
 const clearBtn = document.querySelector("#clear-btn");
 const decimalBtn = document.querySelector('#decimal');
+const deleteBtn = document.querySelector('#delete-btn');
 
 let num1;
 let num2;
@@ -21,8 +22,17 @@ numButtons.forEach(button => {
 operators.forEach(operator => {
   operator.addEventListener('click', getOperator);
 })
+deleteBtn.addEventListener('click', deleteOneDigit);
 equalOperator.addEventListener('click', operateAndDisplay);
 
+function deleteOneDigit(event) {
+  let result = display.textContent;
+  if (result) result = result.slice(0, result.length - 1);
+  display.textContent = result;
+  if (!num2) num1 = Number(result);
+  else num2 = Number(result);
+  console.log("after delete: ", num1, num2);
+}
 
 
 function add(a, b) {
@@ -180,5 +190,3 @@ function storeNum(event) {
 
   console.log(num1, typeof num1, num2, typeof num2, operator,waitingFor2ndNum);
 }
-
-//TODO: use RegEx for condition operator sign
