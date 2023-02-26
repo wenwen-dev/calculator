@@ -37,8 +37,6 @@ let waitingFor2ndNum;
 let isDecimal = false;
 
 
-//TODO: Change button colors and designs to be prettier
-// TODO: make the operator button change color until another button is pressed
 //FIXME: at last, go through my codes, esp. storeNum() and improve the logic, can compare with other solutions to learn
 
 clearBtn.addEventListener('click', clear);
@@ -48,6 +46,7 @@ numButtons.forEach(button => {
 })
 operators.forEach(operator => {
   operator.addEventListener('click', getOperator);
+  // operator.addEventListener('click', changeBgColor);
 })
 equalOperator.addEventListener('click', operateAndDisplay);
 
@@ -114,6 +113,8 @@ function getOperator(event) {
     operator = event.target.textContent;
   }
   console.log(`summary: ${num1}, ${num2}, ${operator}`);
+  event.target.style.backgroundColor = 'white';
+  event.target.style.color = 'black';
 
 }
 
@@ -127,6 +128,11 @@ function updateNum(num) {
 }
 
 function storeNum(event) {
+  operators.forEach(operator =>  {
+    operator.style.backgroundColor = '#635985';
+    operator.style.color = 'white';
+
+  })
   if (event.target.textContent == '.') {
     isDecimal = true;
     num2 ? 
